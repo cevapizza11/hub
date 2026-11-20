@@ -1,5 +1,5 @@
 // Mes outils — service worker (réseau d'abord, copie de secours hors ligne)
-const CACHE='hub-v2-20261120-1150';
+const CACHE='hub-v3-20261120-1700';
 const FICHIERS=['./','index.html','manifest.json','favicon.png','apple-touch-icon.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FICHIERS)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE).map(n=>caches.delete(n)))).then(()=>self.clients.claim()));});

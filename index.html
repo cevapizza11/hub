@@ -9,6 +9,21 @@
 <meta name="apple-mobile-web-app-title" content="Mes outils">
 <meta name="theme-color" content="#0A0C11">
 <meta name="robots" content="noindex, nofollow">
+<script>
+  // Verrou : la page ne s'ouvre qu'après le code tapé sur la page de l'équipe (5 touches sur le logo M).
+  // Le déverrouillage vaut pour cet onglet seulement, 8 h maximum. Sinon retour à la page de l'équipe.
+  (function(){
+    const EMPREINTE='281ae574312f498e2126653cf57c5de288d6a0f4ba5779a7c654300ef8bdc824';
+    let ok=false;
+    try{ const c=JSON.parse(sessionStorage.getItem('hub_cle')||'null'); ok=!!(c&&c.e===EMPREINTE&&Date.now()-c.t<8*3600*1000); }catch(e){}
+    if(!ok){ document.documentElement.style.display='none'; location.replace('https://cevapizza11.github.io/moulesmile/outils.html'); }
+  })();
+  function fermerHub(){
+    try{ sessionStorage.removeItem('hub_cle'); }catch(e){}
+    location.replace('https://cevapizza11.github.io/moulesmile/outils.html');
+  }
+</script>
+
 <title>Thomas – Mes outils</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,6 +63,9 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px
 .version{font-size:11px;font-weight:600;color:var(--text-2);white-space:nowrap;font-variant-numeric:tabular-nums;padding:6px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-strong)}
 .version::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:7px;vertical-align:1px;box-shadow:0 0 0 3px var(--green-bg)}
 
+.fermer{font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;padding:6px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-strong);color:var(--text)}
+.fermer:hover{border-color:var(--gold-ring)}
+.droite{display:flex;align-items:center;gap:8px}
 /* Horloge */
 .horloge{text-align:center;margin:24px 0 6px}
 #heure{font-family:var(--font-display);font-size:64px;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#FFF 0%,var(--gold-hi) 70%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -124,6 +142,9 @@ footer{text-align:center;color:var(--faint);font-size:11.5px;margin-top:34px;lin
   .onglet{flex-direction:column;gap:3px;padding:9px 4px;font-size:11.5px;min-width:0;white-space:nowrap}
   .onglet .e{font-size:20px;line-height:1}
   .onglet .n,.onglet .l{display:none}
+  .fermer .ft{display:none}
+  .brand-name{white-space:nowrap;font-size:21px}
+  .marque{gap:8px}
   .onglet .c{display:inline}
 }
 </style>
@@ -136,7 +157,7 @@ footer{text-align:center;color:var(--faint);font-size:11.5px;margin-top:34px;lin
     <div class="brand-mark">T</div>
     <div><div class="brand-name">Mes <em>outils</em></div><div class="brand-sub">Thomas Martin · toutes les applis</div></div>
   </div>
-  <div class="version">v.20/11/2026 11:50</div>
+  <div class="droite"><div class="version">v.20/11/2026 17:00</div><button class="fermer" onclick="fermerHub()" title="Fermer et reverrouiller">🔒<span class="ft"> Fermer</span></button></div>
 </header>
 
 <div class="horloge">
@@ -340,8 +361,8 @@ footer{text-align:center;color:var(--faint);font-size:11.5px;margin-top:34px;lin
 </section>
 
 <footer>
-  Page personnelle — à ne pas partager avec l'équipe.<br>
-  L'équipe du restaurant utilise sa propre page : moulesmile/outils.html
+  Page personnelle verrouillée — on y entre depuis la page de l'équipe (5 touches sur le logo M, puis le code).<br>
+  « 🔒 Fermer » reverrouille et revient à la page de l'équipe.
 </footer>
 </div>
 
